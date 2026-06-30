@@ -14,8 +14,6 @@ class ComputePath(py_trees.behaviour.Behaviour):
 
     def update(self):
 
-        print(f"Executing: {self.name}")
-
         robot = self.blackboard.read("robot")
         if robot is None:
             return py_trees.common.Status.FAILURE
@@ -60,7 +58,6 @@ class MoveTo(py_trees.behaviour.Behaviour):
         self.blackboard = blackboard
 
     def update(self):
-        print(f"Executing: {self.name}")
 
         robot = self.blackboard.read("robot")
         if robot is None:

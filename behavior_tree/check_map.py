@@ -10,7 +10,6 @@ class MapExist(py_trees.behaviour.Behaviour):
         super().__init__(name)
 
     def update(self):
-        print(f"Execute: {self.name}")
         if CSPACE_PATH.exists():
             return py_trees.common.Status.SUCCESS
         return py_trees.common.Status.FAILURE
