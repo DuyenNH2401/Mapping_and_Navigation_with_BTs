@@ -40,4 +40,4 @@ class PerceptionMixin:
 
         X_world = w_T_r @ X_robot
 
-        return X_robot, X_world
+        return X_world, X_robot

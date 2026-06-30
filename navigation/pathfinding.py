@@ -42,19 +42,20 @@ def astar(cspace, start_world, goal_world):
     start_px = world_to_pixel(*start_world, rows, cols)
     goal_px = world_to_pixel(*goal_world, rows, cols)
 
-    start_rc = (start_px[1], start_px[0])  # (row, col)
-    goal_rc = (goal_px[1], goal_px[0])
+    # Map uses (x, y) indexing convention: cspace[x, y]
+    start_xy = (start_px[0], start_px[1])
+    goal_xy = (goal_px[0], goal_px[1])
 
     # Bounds & obstacle check
-    if not (0 <= start_rc[0] < rows and 0 <= start_rc[1] < cols):
+    if not (0 <= start_xy[0] < rows and 0 <= start_xy[1] < cols):
         return None
-    if not (0 <= goal_rc[0] < rows and 0 <= goal_rc[1] < cols):
+    if not (0 <= goal_xy[0] < rows and 0 <= goal_xy[1] < cols):
         return None
-    if cspace[start_rc] or cspace[goal_rc]:
+    if cspace[start_xy] or cspace[goal_xy]:
         return None
 
     # If already at goal
-    if start_rc == goal_rc:
+    if start_xy == goal_xy:
         return [start_world, goal_world]
 
     # 8-connected neighbours with move costs
@@ -69,34 +70,36 @@ def astar(cspace, start_world, goal_world):
         (1, 1, np.sqrt(2)),
     ]
 
-    def _heuristic(rc):
-        dr = abs(rc[0] - goal_rc[0])
-        dc = abs(rc[1] - goal_rc[1])
-        return np.sqrt(dr**2 + dc**2)
+    def _heuristic(xy):
+        dx = abs(xy[0] - goal_xy[0])
+        dy = abs(xy[1] - goal_xy[1])
+        return np.sqrt(dx**2 + dy**2)
 
-    open_heap = [(0.0, start_rc)]
+    open_heap = [(0.0, start_xy)]
     came_from = {}
-    g_score = {start_rc: 0.0}
+    g_score = {start_xy: 0.0}
 
     while open_heap:
         _, cur = heapq.heappop(open_heap)
 
-        if cur == goal_rc:
-            # Reconstruct pixel path
-            path_px = [(cur[1], cur[0])]  # (x, y)
+        if cur == goal_xy:
+            # Reconstruct pixel path in (x, y) order
+            path_px = [(cur[0], cur[1])]
             while cur in came_from:
                 cur = came_from[cur]
-                path_px.append((cur[1], cur[0]))
+                path_px.append((cur[0], cur[1]))
             path_px.reverse()
 
             # Simplify then convert to world
             simple_px = simplify_path(path_px, cspace)
             return [pixel_to_world(px, py, rows, cols) for px, py in simple_px]
 
-        for dr, dc, move_cost in _NEIGHBOURS:
-            nb = (cur[0] + dr, cur[1] + dc)
+        for dx, dy, move_cost in _NEIGHBOURS:
+            nx = cur[0] + dx
+            ny = cur[1] + dy
+            nb = (nx, ny)
 
-            if not (0 <= nb[0] < rows and 0 <= nb[1] < cols):
+            if not (0 <= nx < rows and 0 <= ny < cols):
                 continue
             if cspace[nb]:
                 continue
@@ -140,9 +143,9 @@ def _line_of_sight(p1, p2, cspace):
     err = dx - dy
 
     while True:
-        if not (0 <= y1 < rows and 0 <= x1 < cols):
+        if not (0 <= x1 < rows and 0 <= y1 < cols):
             return False
-        if cspace[y1, x1]:
+        if cspace[x1, y1]:
             return False
         if x1 == x2 and y1 == y2:
             break

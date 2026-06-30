@@ -9,8 +9,8 @@ from behavior_tree.map_running import MoveTable, RunMapping
 from behavior_tree.navigation_nodes import ComputePath, MoveTo
 from tiago_robot import TiagoBT
 
-LEFT_CORNER = (-1.4, -3.0)
-SINK_POINT = (0.75, 0.75)
+LEFT_CORNER = (-1.4, -3.2)
+SINK_POINT = (0.7, 0.6)
 
 
 def create_behavior_tree(blackboard):

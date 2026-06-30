@@ -15,13 +15,13 @@ class TrajectoryMixin:
 
         self.set_wheel_velocity(phil, phir)
 
-        if rho < 0.3 and self.state == "Forward":
+        if rho < 0.3 and self.state == "forward":
             index += 1
             if index >= len(waypoints):
-                self.state = "Backward"
+                self.state = "backward"
                 index = len(waypoints) - 2
 
-        elif rho < 0.3 and self.state == "Backward":
+        elif rho < 0.3 and self.state == "backward":
             index -= 1
             if index < 0:
                 self.is_finished = True

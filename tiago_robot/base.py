@@ -10,7 +10,7 @@ class RobotBase:
     def __init__(self):
         self.robot = Supervisor()
         self.timestep = int(self.robot.getBasicTimeStep())
-        self.state = "Forward"
+        self.state = "forward"
 
         self.marker = self.robot.getFromDef("marker").getField("translation")
 
@@ -47,30 +47,30 @@ class RobotBase:
     # Constants & state
 
     def _init_constants(self):
-        self.max_velocity = 10.0  # Maximum wheel velocity
+        self.max_velocity = 10.1523  # Maximum wheel velocity
 
-        self.p_alpha = 4
+        self.p_alpha = 3
         self.p_rho = np.pi
 
         self.is_finished = False
 
-        self.xw = -0.4  # Robot's x position
-        self.yw = 0.6  # Robot's y position
+        self.xw = -0.1  # Robot's x position
+        self.yw = 0.18  # Robot's y position
         self.alpha = 0.0  # Robot's orientation (yaw angle)
 
-        self.map = np.zeros((200, 300))  # Initialize a 200x300 map with zeros
+        self.map = np.zeros((300, 300))  # Initialize a 300x300 map with zeros
 
         self.waypoints = np.array(
             [
                 # [-0.89, 0.75],
-                [0.90, -0.12],
-                [0.67, -0.45],
+                [0.8, -0.2],
+                [0.8, -0.45],
                 [0.57, -1.83],
                 [0.14, -3.14],
-                [-0.78, -3.15],
-                [-1.65, -2.92],
-                [-1.65, -1.6],
-                [-1.70, -0.09],
+                [-0.9, -3.15],
+                [-1.68, -2.92],
+                [-1.68, -1.6],
+                [-1.68, -0.09],
                 [-0.74, 0.50],
             ]
         )

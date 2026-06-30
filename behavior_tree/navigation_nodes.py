@@ -30,13 +30,14 @@ class ComputePath(py_trees.behaviour.Behaviour):
         start_px = world_to_pixel(start[0], start[1], rows, cols)
         end_px = world_to_pixel(self.point[0], self.point[1], rows, cols)
 
-        cspace[start_px[1], start_px[0]] = False
-        cspace[end_px[1], end_px[0]] = False
+        cspace[start_px[0], start_px[1]] = False
+        cspace[end_px[0], end_px[1]] = False
         for dy in (-1, 0, 1):
             for dx in (-1, 0, 1):
-                ny, nx = start_px[1] + dy, start_px[0] + dx
-                if 0 <= ny < rows and 0 <= nx < cols:
-                    cspace[ny, nx] = False
+                nx = start_px[0] + dx
+                ny = start_px[1] + dy
+                if 0 <= nx < rows and 0 <= ny < cols:
+                    cspace[nx, ny] = False
 
         path = astar(cspace, start, self.point)
 

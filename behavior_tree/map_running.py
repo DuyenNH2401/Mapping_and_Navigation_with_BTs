@@ -48,7 +48,7 @@ class MoveTable(py_trees.behaviour.Behaviour):
 
         self.index = robot.trajectory_following(self.index, self.waypoints)
 
-        if robot.state == "Backward" and self.index == 0:
+        if robot.state == "backward" and self.index == 0:
             save_cspace(robot)
             robot.set_wheel_velocity(0.0, 0.0)
             return py_trees.common.Status.SUCCESS
