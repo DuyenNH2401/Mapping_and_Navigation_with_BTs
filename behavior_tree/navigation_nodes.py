@@ -26,15 +26,14 @@ class ComputePath(py_trees.behaviour.Behaviour):
             return py_trees.common.Status.FAILURE
 
         from navigation.pathfinding import world_to_pixel
+
         rows, cols = cspace.shape
         start = (robot.xw, robot.yw)
         start_px = world_to_pixel(start[0], start[1], rows, cols)
         end_px = world_to_pixel(self.point[0], self.point[1], rows, cols)
 
-        # Temporarily clear start & goal cells (robot IS there, goal SHOULD be reachable)
         cspace[start_px[1], start_px[0]] = False
         cspace[end_px[1], end_px[0]] = False
-        # Also clear 1-cell neighbours around start so robot can move out
         for dy in (-1, 0, 1):
             for dx in (-1, 0, 1):
                 ny, nx = start_px[1] + dy, start_px[0] + dx

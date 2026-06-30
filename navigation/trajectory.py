@@ -38,7 +38,7 @@ class TrajectoryMixin:
         dx = point[0] - self.xw
         dy = point[1] - self.yw
 
-        rho = np.sqrt(dx ** 2 + dy ** 2)  # Distance to the goal
+        rho = np.sqrt(dx**2 + dy**2)  # Distance to the goal
         alpha = np.arctan2(dy, dx) - self.alpha  # Angle to the goal
 
         # Normalize alpha to be within [-pi, pi]
@@ -50,15 +50,7 @@ class TrajectoryMixin:
         return rho, alpha
 
     def follow_path(self, index, waypoints):
-        """Forward-only waypoint following — simpler than trajectory_following.
-
-        Drives the robot toward waypoints[index].  Advances *index* when
-        within 0.3 m of the current waypoint.
-
-        Returns:
-            (index, reached): *index* is the (possibly advanced) waypoint
-            index.  *reached* is True once the final waypoint is reached.
-        """
+        """Follows a path defined by a list of waypoints."""
         if index >= len(waypoints):
             return index, True
 

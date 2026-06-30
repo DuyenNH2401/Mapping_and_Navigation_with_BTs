@@ -78,9 +78,7 @@ class RobotBase:
     # Simulation step
 
     def step(self):
-        # print(f"[DEBUG] Calling Supervisor.step({self.timestep})...", flush=True)
         result = self.robot.step(self.timestep)
-        # print(f"[DEBUG] Supervisor.step returned: {result}, is_finished={self.is_finished}", flush=True)
         if result == -1:
             return False
         return not self.is_finished

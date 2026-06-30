@@ -63,16 +63,6 @@ def main():
         robot.update_odometry()
         tree.tick()
 
-        # Debug: print feedback from all running/failed nodes
-        def _print_feedback(node, depth=0):
-            msg = getattr(node, "feedback_message", None)
-            if msg:
-                print(f"{'  ' * depth}[{node.name}] {msg}")
-            for child in getattr(node, "children", []):
-                _print_feedback(child, depth + 1)
-
-        _print_feedback(tree.root)
-
         if tree.root.status == py_trees.common.Status.SUCCESS:
             print("Mission complete!")
             break

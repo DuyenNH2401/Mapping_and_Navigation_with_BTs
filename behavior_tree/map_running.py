@@ -1,7 +1,8 @@
 """Behavior-tree nodes for mapping phase."""
 
-from mapping.move_table import mapping_run, save_cspace
 import py_trees
+
+from mapping.move_table import mapping_run, save_cspace
 
 
 class RunMapping(py_trees.behaviour.Behaviour):
@@ -12,6 +13,7 @@ class RunMapping(py_trees.behaviour.Behaviour):
         self.blackboard = blackboard
 
     def update(self):
+        print(f"Execute: {self.name}")
         robot = self.blackboard.read("robot")
         if robot is None:
             return py_trees.common.Status.FAILURE
@@ -45,6 +47,7 @@ class MoveTable(py_trees.behaviour.Behaviour):
         if robot is None:
             return py_trees.common.Status.FAILURE
 
+        print(f"Execute: {self.name}")
         self.index = robot.trajectory_following(self.index, self.waypoints)
 
         if robot.state == "Backward" and self.index == 0:
