@@ -21,27 +21,38 @@ import time
 from pathlib import Path
 
 
-PROJECT_ROOT = Path(__file__).resolve().parent
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_WORLD = PROJECT_ROOT / "worlds" / "kitchen.wbt"
 
 
 def main():
     parser = argparse.ArgumentParser(description="Run Webots headless")
     parser.add_argument(
-        "--mode", choices=["bt", "mapping", "navigation"], default="bt",
-        help="Simulation mode (default: bt)"
+        "--mode",
+        "-m",
+        choices=["bt", "mapping", "navigation"],
+        default="bt",
+        help="Simulation mode (default: bt)",
     )
     parser.add_argument(
-        "--world", type=Path, default=DEFAULT_WORLD,
-        help=f"Path to .wbt world file (default: {DEFAULT_WORLD})"
+        "--world",
+        "-w",
+        type=Path,
+        default=DEFAULT_WORLD,
+        help=f"Path to .wbt world file (default: {DEFAULT_WORLD})",
     )
     parser.add_argument(
-        "--fast", action="store_true", default=True,
-        help="Run in fast mode (default: True)"
+        "--fast",
+        "-f",
+        action="store_true",
+        default=True,
+        help="Run in fast mode (default: True)",
     )
     parser.add_argument(
-        "--no-fast", action="store_true", dest="realtime",
-        help="Run in real-time mode instead of fast"
+        "--no-fast",
+        action="store_true",
+        dest="realtime",
+        help="Run in real-time mode instead of fast",
     )
     args = parser.parse_args()
 
@@ -67,7 +78,9 @@ def main():
 
     env = {}
     if args.mode == "navigation":
-        cspace_path = PROJECT_ROOT / "controllers" / "tiago_bt" / "map_save" / "cspace.npy"
+        cspace_path = (
+            PROJECT_ROOT / "controllers" / "tiago_bt" / "map_save" / "cspace.npy"
+        )
         if not cspace_path.exists():
             print(
                 f"ERROR: cspace.npy not found at {cspace_path}\n"
