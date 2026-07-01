@@ -65,7 +65,7 @@ python run_headless.py --mode navigation
 
 ## Behavior Tree Flow
 
-![Behavior Tree Diagram](bt.png)
+![Behavior Tree Diagram](behavior_tree.svg)
 
 1. **Selector: "Does Map Exist?"**
    - Tries to find an existing map.
